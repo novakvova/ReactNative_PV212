@@ -6,13 +6,15 @@ import {
     SafeAreaView,
     Text,
     TouchableOpacity,
-    View
+    View,
+    Alert
 } from "react-native";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import ScrollView = Animated.ScrollView;
 import {useState} from "react";
 import FormField from "@/components/FormField";
 import {useRouter} from "expo-router";
+import axios from "axios";
 
 const LoginScreen = () => {
 
@@ -23,8 +25,27 @@ const LoginScreen = () => {
         setForm({ ...form, [field]: value });
     };
 
-    const handleSignIp = () => {
+    const handleSignIp = async () => {
         console.log("Вхід:", form);
+        try {
+            const resp = await axios.post("https://pv212api.itstep.click/api/account/login",
+                form);
+            // console.log("Result", resp);
+            const {data} = resp;
+            console.log("data", data)
+            Alert.alert(
+                "Увага", // Title
+                "Вхід успішний. Все у ваших руках.", // Message
+                [], // Порожній масив для кнопок
+                { cancelable: true } // Дозволяє закрити алерт, натиснувши поза його межами
+            );
+
+            setForm({email: "", password: ""});
+        }
+        catch (error) {
+            console.error("Error login server", error);
+        }
+
         // Тут можна додати логіку реєстрації
     };
 
