@@ -65,5 +65,14 @@ import "../global.css"
 ## Clear cache
 ```
 npm start -- --reset-cache
+npx expo start --clear
 ```
 
+## Add expo-secure-store
+```
+npx expo install expo-secure-store
+
+npm i react-redux
+npm i @reduxjs/toolkit
+npm i jwt-decode
+```
