@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import {useRouter} from "expo-router";
 import { logOut} from "@/store/slices/userSlice";
 import {useAppDispatch, useAppSelector} from "@/store";
+import AppLogo from "@/components/AppLogo";
 
 
 const ProfileScreen = () => {
@@ -17,6 +18,8 @@ const ProfileScreen = () => {
 
     return (
         <View style={styles.container}>
+            <AppLogo />
+
             <Text style={styles.title}>Інформація про користувача:</Text>
             {user ? (
                 <>
