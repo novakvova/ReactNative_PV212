@@ -1,10 +1,6 @@
-// @ts-ignore
-import logo from '../assets/images/logo.png';
-// @ts-ignore
-import app_logo from '../assets/images/app_logo.png';
 
 
 export default {
-    logo,
-    app_logo
-}
+    logo: require('../assets/images/logo.png'),
+    app_logo: require('../assets/images/app_logo.png'),
+};

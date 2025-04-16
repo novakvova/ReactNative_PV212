@@ -51,7 +51,7 @@ const LoginScreen = () => {
             setForm({ email: "", password: "" });
 
             // Перенаправляємо користувача на сторінку профілю
-            router.replace("/(auth)/profile");
+            router.replace("/profile");
 
         }
         catch (error) {
