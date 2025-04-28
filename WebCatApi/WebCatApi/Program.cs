@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using WebCatApi.Abstract;
 using WebCatApi.Data;
 using WebCatApi.Data.Entities.Identity;
@@ -39,6 +40,16 @@ var app = builder.Build();
 // {
 //     app.MapOpenApi();
 // }
+
+var imagesFolger = builder.Configuration.GetValue<string>("ImagesDir") ?? "";
+var dirSave = Path.Combine(builder.Environment.ContentRootPath, imagesFolger);
+Directory.CreateDirectory(dirSave);
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(dirSave),
+    RequestPath = $"/{imagesFolger}"
+});
 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Web Cat v1"));
