@@ -82,5 +82,4 @@ npm i jwt-decode
 ```
 npx expo install expo-file-system
 npx expo install expo-image-picker
-
 ```

@@ -17,7 +17,16 @@ export const accountApi = createApi({
                 }
             },
         }),
+        register: builder.mutation<ILoginResponse, FormData>({
+            query: (formData) => ({
+                url: 'register',
+                method: 'POST',
+                body: formData,
+            }),
+            invalidatesTags: ['Account'],
+        }),
+
     }),
 })
 
-export const { useLoginMutation } = accountApi
+export const { useLoginMutation, useRegisterMutation } = accountApi
