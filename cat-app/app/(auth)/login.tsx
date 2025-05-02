@@ -37,13 +37,13 @@ const LoginScreen = () => {
 
 
     const handleSignIp = async () => {
-        console.log("Вхід:", form);
+        //console.log("Вхід:", form);
         try {
 
             const res = await login({ ...form }).unwrap()
             // console.log("Result", resp);
             //const {data} = res;
-            console.log("data", res)
+            //console.log("data", res)
 
 
             await saveToSecureStore('authToken', res.token)
