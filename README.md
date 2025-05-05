@@ -45,6 +45,9 @@ To run your project, navigate to the directory and run one of the following npm 
 
 Run Server App
 ```
+sudo apt install dos2unix
+dos2unix docker_pv212.sh
+
 chmod +x docker_pv212.sh
 ./docker_pv212.sh
 ```
