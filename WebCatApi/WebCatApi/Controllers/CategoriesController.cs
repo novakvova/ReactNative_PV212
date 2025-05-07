@@ -74,4 +74,22 @@ public class CategoriesController(IMapper mapper,
         context.SaveChanges();
         return Ok(new { id = category.Id });
     }
+
+    [HttpDelete("{id}")]
+    public IActionResult Remove(int id)
+    {
+        var category = context.Categories.SingleOrDefault(x => x.Id == id);
+        if (category == null)
+            return NotFound();
+
+        if (category.Image != null)
+        {
+            imageService.DeleteImageIfExists(category.Image);
+        }
+
+        context.Categories.Remove(category);
+        context.SaveChanges();
+        return Ok();
+    }
+
 }
