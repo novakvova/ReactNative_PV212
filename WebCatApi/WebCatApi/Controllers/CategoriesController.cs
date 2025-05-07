@@ -3,7 +3,9 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebCatApi.Abstract;
 using WebCatApi.Data;
+using WebCatApi.Data.Entities;
 using WebCatApi.Data.Entities.Identity;
 using WebCatApi.Models.Category;
 
@@ -14,7 +16,8 @@ namespace WebCatApi.Controllers;
 [Authorize]
 public class CategoriesController(IMapper mapper,
     WebCatDbContext context, 
-    UserManager<UserEntity> userManager) : ControllerBase
+    UserManager<UserEntity> userManager,
+    IImageService imageService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetList()
@@ -36,5 +39,20 @@ public class CategoriesController(IMapper mapper,
                 invalid = ex.Message
             });
         }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromForm] CategoryCreateViewModel model)
+    {
+        string userName = User.Claims.FirstOrDefault().Value;
+        var user = await userManager.FindByEmailAsync(userName);
+
+        var category = mapper.Map<CategoryEntity>(model);
+        category.Image = await imageService.SaveImageAsync(model.Image);
+        category.UserId = user.Id;
+
+        context.Categories.Add(category);
+        context.SaveChanges();
+        return Ok(new { id = category.Id });
     }
 }
